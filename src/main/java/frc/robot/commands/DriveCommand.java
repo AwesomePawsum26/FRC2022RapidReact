@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.driveSubsystem;
 
 public class DriveCommand extends Command{
-    public final driveSubsystem driveSubsystem;
+    private final driveSubsystem driveSubsystem;
 
-    public final XboxController controller;
+    private final XboxController controller;
 
 
     public DriveCommand(driveSubsystem driveSubsystem){

@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.hornCommand;
@@ -28,20 +29,22 @@ public class RobotContainer {
 
   private shooterSubsystem shooterSubsystem = new shooterSubsystem();
   private shooterCommand shooterCommand = new shooterCommand(shooterSubsystem);
+  private Command idleCommandShooter = shooterSubsystem.run(shooterSubsystem::stopShooter);
+  private Command idleHornCommand = hornSubsystem.run(hornSubsystem::stopHorn);
     
   private final CommandXboxController controller = new CommandXboxController(0);
 
   public RobotContainer() {
-    shooterSubsystem.setDefaultCommand(shooterCommand);
+    shooterSubsystem.setDefaultCommand(idleCommandShooter);
     driveSubsystem.setDefaultCommand(driveCommand);
-    hornSubsystem.setDefaultCommand(hornCommand);
+    hornSubsystem.setDefaultCommand(idleHornCommand);
 
     configureBindings();
   }
 
   private void configureBindings() {
-    controller.a().whileTrue(new shooterCommand(shooterSubsystem));
-    controller.rightBumper().whileTrue(new hornCommand(hornSubsystem));
+    controller.a().whileTrue(shooterCommand);
+    controller.rightBumper().whileTrue(hornCommand);
   }
   
 }

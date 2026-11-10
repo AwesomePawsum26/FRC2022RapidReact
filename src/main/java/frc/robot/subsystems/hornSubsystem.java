@@ -12,4 +12,7 @@ public class hornSubsystem extends SubsystemBase {
     public void honk(){
         horn.set(1);
     }
+    public void stopHorn(){
+        horn.set(0);
+    }
 }

@@ -19,12 +19,12 @@ public class driveSubsystem extends SubsystemBase {
     leftDrive = new VictorSP(1);
     rightDrive = new VictorSP(0);
 
-    leftDrive.setInverted(true);
+    rightDrive.setInverted(true);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
   }
 
   public void Drive(double xSpeed, double zRotation){
-    drive.arcadeDrive(xSpeed, zRotation);
+    drive.arcadeDrive(xSpeed, -zRotation);
   }
 }

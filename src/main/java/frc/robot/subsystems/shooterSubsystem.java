@@ -19,7 +19,11 @@ public class shooterSubsystem extends SubsystemBase {
     }
 
     public void Shoot(){
-        flywheel.setVoltage(2);
-        indexer.setVoltage(2);
+        flywheel.setVoltage(-3);
+        indexer.setVoltage(-5);
+    }
+    public void stopShooter(){
+        flywheel.setVoltage(0);
+        indexer.setVoltage(0);
     }
 }
