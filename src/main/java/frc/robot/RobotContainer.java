@@ -6,8 +6,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.hornCommand;
 import frc.robot.commands.shooterCommand;
 import frc.robot.subsystems.driveSubsystem;
+import frc.robot.subsystems.hornSubsystem;
 import frc.robot.subsystems.shooterSubsystem;
 
 /**
@@ -17,6 +19,9 @@ import frc.robot.subsystems.shooterSubsystem;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  private hornSubsystem hornSubsystem = new hornSubsystem();
+  private hornCommand hornCommand = new hornCommand(hornSubsystem);
 
   private driveSubsystem driveSubsystem = new driveSubsystem();
   private DriveCommand driveCommand = new DriveCommand(driveSubsystem);
@@ -29,11 +34,14 @@ public class RobotContainer {
   public RobotContainer() {
     shooterSubsystem.setDefaultCommand(shooterCommand);
     driveSubsystem.setDefaultCommand(driveCommand);
+    hornSubsystem.setDefaultCommand(hornCommand);
+
     configureBindings();
   }
 
   private void configureBindings() {
     controller.a().whileTrue(new shooterCommand(shooterSubsystem));
+    controller.rightBumper().whileTrue(new hornCommand(hornSubsystem));
   }
   
 }
