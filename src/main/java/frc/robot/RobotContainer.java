@@ -29,6 +29,7 @@ public class RobotContainer {
 
   private shooterSubsystem shooterSubsystem = new shooterSubsystem();
   private shooterCommand shooterCommand = new shooterCommand(shooterSubsystem);
+  
   private Command idleCommandShooter = shooterSubsystem.run(shooterSubsystem::stopShooter);
   private Command idleHornCommand = hornSubsystem.run(hornSubsystem::stopHorn);
     
@@ -38,6 +39,7 @@ public class RobotContainer {
     shooterSubsystem.setDefaultCommand(idleCommandShooter);
     driveSubsystem.setDefaultCommand(driveCommand);
     hornSubsystem.setDefaultCommand(idleHornCommand);
+    
 
     configureBindings();
   }
