@@ -7,10 +7,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.spark.SparkBase;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
-import frc.robot.Constants;
+import frc.robot.Constants.OperatorConstants;;
 
 
 public class shooterSubsystem extends SubsystemBase {
@@ -26,7 +25,7 @@ public class shooterSubsystem extends SubsystemBase {
         indexer = new SparkMax(2, MotorType.kBrushless);
         
         hoodConfig = new SparkMaxConfig();
-        hoodConfig.closedLoop.pid(0.6, 0.02, 0.01);
+        hoodConfig.closedLoop.pid(OperatorConstants.kP, OperatorConstants.kI, OperatorConstants.kD);
         hoodConfig.closedLoop.outputRange(0.5, 0.5);
 
         hood.configure(hoodConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
