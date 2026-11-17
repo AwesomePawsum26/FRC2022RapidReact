@@ -15,5 +15,5 @@ public class shooterCommand extends Command {
     @Override
     public void execute(){
         shooterSubsystem.Shoot();
-    
+    }
 }
