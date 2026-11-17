@@ -8,6 +8,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
@@ -32,9 +33,9 @@ public class shooterSubsystem extends SubsystemBase {
     private DoublePublisher hoodPosition;
     private DoubleSubscriber changeShooterSpeed;
     public DoubleSubscriber changeHoodPosition;
-    private DoubleSubscriber kP;
-    private DoubleSubscriber kI;
-    private DoubleSubscriber kD;
+    private DoubleEntry kP;
+    private DoubleEntry kI;
+    private DoubleEntry kD;
 
     public shooterSubsystem() {
     
@@ -44,11 +45,11 @@ public class shooterSubsystem extends SubsystemBase {
 
         hoodPosition = hoodTable.getDoubleTopic("Hood Position").publish();
         shooterSpeed = shooterTable2.getDoubleTopic("Shooter Speed").publish();
-        changeShooterSpeed = shooterTable2.getDoubleTopic("Change Shooter Speed").subscribe(0);
-        changeHoodPosition = hoodTable.getDoubleTopic("Change Hood Position").subscribe(0);
-        kP = shooterTable2.getDoubleTopic("kP").subscribe(0);
-        kI = shooterTable2.getDoubleTopic("kI").subscribe(0);
-        kD = shooterTable2.getDoubleTopic("kD").subscribe(0);
+        changeShooterSpeed = shooterTable2.getDoubleTopic("Change Shooter Speed").getEntry(0);
+        changeHoodPosition = hoodTable.getDoubleTopic("Change Hood Position").getEntry(0);
+        kP = shooterTable2.getDoubleTopic("kP").getEntry(0);
+        kI = shooterTable2.getDoubleTopic("kI").getEntry(0);
+        kD = shooterTable2.getDoubleTopic("kD").getEntry(0);
 
 
 

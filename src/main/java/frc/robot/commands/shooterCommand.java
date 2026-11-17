@@ -10,7 +10,7 @@ public class shooterCommand extends Command {
         this.shooterSubsystem = shooterSubsystem;
 
         addRequirements(shooterSubsystem);
-    } 
+    }   
 
     @Override
     public void execute(){
