@@ -12,13 +12,11 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.DoubleSubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.ResetMode;
-
-import java.util.jar.Attributes.Name;
-
 import com.revrobotics.PersistMode;
-import frc.robot.Constants.OperatorConstants;;
 
 
 public class shooterSubsystem extends SubsystemBase {
@@ -33,11 +31,13 @@ public class shooterSubsystem extends SubsystemBase {
     private DoublePublisher shooterSpeed;
     private DoublePublisher hoodPosition;
     private DoubleSubscriber changeShooterSpeed;
-    private DoubleSubscriber changeHoodPosition;
+    public DoubleSubscriber changeHoodPosition;
+    private DoubleSubscriber kP;
+    private DoubleSubscriber kI;
+    private DoubleSubscriber kD;
 
     public shooterSubsystem() {
     
-
         NetworkTableInstance shooterTable = NetworkTableInstance.getDefault();
         NetworkTable shooterTable2 = shooterTable.getTable("Shooter");
         NetworkTable hoodTable = shooterTable.getTable("Hood");
@@ -46,6 +46,11 @@ public class shooterSubsystem extends SubsystemBase {
         shooterSpeed = shooterTable2.getDoubleTopic("Shooter Speed").publish();
         changeShooterSpeed = shooterTable2.getDoubleTopic("Change Shooter Speed").subscribe(0);
         changeHoodPosition = hoodTable.getDoubleTopic("Change Hood Position").subscribe(0);
+        kP = shooterTable2.getDoubleTopic("kP").subscribe(0);
+        kI = shooterTable2.getDoubleTopic("kI").subscribe(0);
+        kD = shooterTable2.getDoubleTopic("kD").subscribe(0);
+
+
 
 
 
@@ -64,14 +69,13 @@ public class shooterSubsystem extends SubsystemBase {
         hood = new SparkMax(8, MotorType.kBrushless);
         
         hoodConfig = new SparkMaxConfig();
-        hoodConfig.closedLoop.pid(OperatorConstants.kP, OperatorConstants.kI, OperatorConstants.kD);
+        hoodConfig.closedLoop.pid(kP.get(), kI.get(), kD.get());
         hoodConfig.closedLoop.outputRange(-0.5, 0.5);
         hoodConfig.idleMode(IdleMode.kBrake);
 
         hood.configure(hoodConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         hoodLoopController = hood.getClosedLoopController();
-        
     }
 
     public void Shoot(){

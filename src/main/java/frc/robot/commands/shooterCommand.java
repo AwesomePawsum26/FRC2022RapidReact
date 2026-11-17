@@ -12,14 +12,12 @@ public class shooterCommand extends Command {
         addRequirements(shooterSubsystem);
     } 
 
-
     @Override
     public void execute(){
         shooterSubsystem.Shoot();
     }
     @Override
     public void initialize(){
-        shooterSubsystem.setHoodPosition(5);
+        shooterSubsystem.setHoodPosition(shooterSubsystem.changeHoodPosition.get());
     }
-
 }
