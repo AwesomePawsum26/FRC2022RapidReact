@@ -83,7 +83,7 @@ public class shooterSubsystem extends SubsystemBase {
         //currently both set to -5
         flywheel.setVoltage(changeShooterSpeed.get());
         indexer.setVoltage(changeShooterSpeed.get());
-        setHoodPosition(changeHoodPosition.get());
+        setHoodPosition();
         
 
     }
@@ -92,8 +92,8 @@ public class shooterSubsystem extends SubsystemBase {
         indexer.setVoltage(0);
         hood.setVoltage(0);
     }
-    public void setHoodPosition(double changeHoodPosition){
-        hoodLoopController.setSetpoint(changeHoodPosition, ControlType.kPosition);
+    public void setHoodPosition(){
+        hoodLoopController.setSetpoint(changeHoodPosition.get(), ControlType.kPosition);
     }
     public double getHoodPosition(){
         return hood.getEncoder().getPosition();
