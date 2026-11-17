@@ -82,6 +82,7 @@ public class shooterSubsystem extends SubsystemBase {
         //currently both set to -5
         flywheel.setVoltage(changeShooterSpeed.get());
         indexer.setVoltage(changeShooterSpeed.get());
+        setHoodPosition(changeHoodPosition.get());
         
 
     }

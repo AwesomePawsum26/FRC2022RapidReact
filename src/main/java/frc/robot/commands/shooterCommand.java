@@ -15,9 +15,5 @@ public class shooterCommand extends Command {
     @Override
     public void execute(){
         shooterSubsystem.Shoot();
-    }
-    @Override
-    public void initialize(){
-        shooterSubsystem.setHoodPosition(shooterSubsystem.changeHoodPosition.get());
-    }
+    
 }
