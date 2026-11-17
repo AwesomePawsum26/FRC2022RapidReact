@@ -24,15 +24,18 @@ public class shooterSubsystem extends SubsystemBase {
     private final SparkMax flywheel;
     private final SparkMax hood;
     private final SparkMax indexer;
-    private SparkClosedLoopController hoodLoopController;
-    private SparkMaxConfig hoodConfig;
+    
     private SparkMaxConfig flywheelConfig;
     private SparkMaxConfig indexerConfig;
+    private SparkClosedLoopController hoodLoopController;
+    private SparkMaxConfig hoodConfig;
 
     private DoublePublisher shooterSpeed;
     private DoublePublisher hoodPosition;
+
     private DoubleSubscriber changeShooterSpeed;
     public DoubleSubscriber changeHoodPosition;
+
     private DoubleEntry kP;
     private DoubleEntry kI;
     private DoubleEntry kD;
@@ -42,17 +45,19 @@ public class shooterSubsystem extends SubsystemBase {
         NetworkTableInstance shooterTable = NetworkTableInstance.getDefault();
         NetworkTable shooterTable2 = shooterTable.getTable("Shooter");
         NetworkTable hoodTable = shooterTable.getTable("Hood");
-
-        hoodPosition = hoodTable.getDoubleTopic("Hood Position").publish();
+        
         shooterSpeed = shooterTable2.getDoubleTopic("Shooter Speed").publish();
         changeShooterSpeed = shooterTable2.getDoubleTopic("Change Shooter Speed").getEntry(0);
+        hoodPosition = hoodTable.getDoubleTopic("Hood Position").publish();
         changeHoodPosition = hoodTable.getDoubleTopic("Change Hood Position").getEntry(0);
+        
         kP = shooterTable2.getDoubleTopic("kP").getEntry(0);
         kI = shooterTable2.getDoubleTopic("kI").getEntry(0);
         kD = shooterTable2.getDoubleTopic("kD").getEntry(0);
 
-
-
+        kP.set(0);
+        kI.set(0);
+        kD.set(0);
 
 
         flywheel = new SparkMax(7, MotorType.kBrushless);
@@ -60,12 +65,6 @@ public class shooterSubsystem extends SubsystemBase {
         flywheelConfig = new SparkMaxConfig();
         flywheelConfig.inverted(true);
         flywheel.configure(flywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-        indexer = new SparkMax(2, MotorType.kBrushless);
-
-        indexerConfig = new SparkMaxConfig();
-        indexerConfig.inverted(true);
-        indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         hood = new SparkMax(8, MotorType.kBrushless);
         
@@ -77,20 +76,25 @@ public class shooterSubsystem extends SubsystemBase {
         hood.configure(hoodConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         hoodLoopController = hood.getClosedLoopController();
+        indexer = new SparkMax(2, MotorType.kBrushless);
+
+        indexerConfig = new SparkMaxConfig();
+        indexerConfig.inverted(true);
+        indexer.configure(indexerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        
     }
 
     public void Shoot(){
-        //currently both set to -5
+        //currently both set to 5
         flywheel.setVoltage(changeShooterSpeed.get());
-        indexer.setVoltage(changeShooterSpeed.get());
         setHoodPosition();
-        
-
+        indexer.setVoltage(5);
     }
     public void stopShooter(){
         flywheel.setVoltage(0);
-        indexer.setVoltage(0);
         hood.setVoltage(0);
+        indexer.setVoltage(0);
     }
     public void setHoodPosition(){
         hoodLoopController.setSetpoint(changeHoodPosition.get(), ControlType.kPosition);
