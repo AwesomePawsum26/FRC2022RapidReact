@@ -61,7 +61,7 @@ public class shooterSubsystem extends SubsystemBase {
         kI = shooterTable2.getDoubleTopic("kI").getEntry(0);
         kD = shooterTable2.getDoubleTopic("kD").getEntry(0);
 
-        //do .set() for all of em to make an acutal default value b/c wpilib's weird
+        //do .set() for all of em to make an acutal default value b/c networktables are inefficient
         shooterSpeed.set(0);
         changeShooterSpeed.set(0);
         hoodPosition.set(0);
