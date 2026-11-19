@@ -51,7 +51,7 @@ public class shooterSubsystem extends SubsystemBase {
         NetworkTable shooterTable2 = shooterTable.getTable("Shooter");
         NetworkTable hoodTable = shooterTable.getTable("Hood");
         
-        //create variables and assign them to specific network tables and give them inital values
+        //create variables and assign them to specific network tables
         shooterSpeed = shooterTable2.getDoubleTopic("Shooter Speed").publish();
         changeShooterSpeed = shooterTable2.getDoubleTopic("Change Shooter Speed").getEntry(0);
         hoodPosition = hoodTable.getDoubleTopic("Hood Position").publish();
@@ -61,7 +61,7 @@ public class shooterSubsystem extends SubsystemBase {
         kI = shooterTable2.getDoubleTopic("kI").getEntry(0);
         kD = shooterTable2.getDoubleTopic("kD").getEntry(0);
 
-        //do .set() for all of em to make an acutal default value b/c networktables are inefficient
+        //do .set() for all of em to make an acutal default value
         shooterSpeed.set(0);
         changeShooterSpeed.set(0);
         hoodPosition.set(0);
